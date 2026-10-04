@@ -78,6 +78,12 @@ Clone it and run it — I'm glad to walk through any design decision in it.
 
 **Infrastructure:** HAProxy · WireGuard · Cloudflare (Pages / Tunnel / R2) · Linux / systemd · Docker · SQLite (WAL / FTS5) · Stripe · Git
 
+## Education & languages
+
+**B.A.,** University of Delaware
+
+**Spoken:** English (native) · French (professional working proficiency)
+
 ## Approach
 
 Give me a hard objective and constraints; I design, build, measure, and iterate until it works. Best with end-to-end ownership in remote, async, output-measured roles.
