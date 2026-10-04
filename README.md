@@ -9,7 +9,19 @@ Tampa Bay Area, FL — **remote only, async-preferred** · full-time or contract
 
 ---
 
-Rust-first systems engineer who writes product logic once as a shared Rust core and ships it behind native shells on **Android, macOS, Windows, and Linux**. Strongest in 0-to-1 work: designing under real constraints, prototyping fast, and validating through tests, benchmarks, and real-world behavior. Runs AI entirely on owned hardware: a load-balanced multi-GPU chatbot service for MCMLV1 customers, an air-gapped autonomous coding platform, private LLM inference over WireGuard, and LLM training from scratch in Rust — no cloud spend. I use AI heavily for implementation and own the design, integration, and verification.
+Rust-first systems engineer who writes product logic once as a shared Rust core and ships it behind native shells on **Android, macOS, Windows, and Linux**. Strongest in 0-to-1 work: designing under real constraints, prototyping fast, and validating through tests, benchmarks, and real-world behavior. Runs all AI on owned hardware — customer-facing serving, private inference, and LLM training from scratch in Rust — with no cloud spend. I use AI heavily for implementation; I own design, integration, and verification.
+
+## Experience
+
+### Founder & Software Engineer — MCMLV1 LLC ([mcmlv1.com](https://mcmlv1.com)) · Jan 2026 – Present
+
+- Shipped **[15 Android apps on Google Play](https://play.google.com/store/apps/developer?id=MCMLV1+LLC)** (plus 4 on Amazon Appstore and 2 on Samsung Galaxy Store) and **[QR Code Link Me](https://apps.microsoft.com/detail/9ngvp6bj0dvl?hl=en-US&gl=US)** on the Microsoft Store (Swift macOS version in Mac App Store review) — offline-first, no ads, accounts, or tracking.
+- **[Private Dictation: Offline AI](https://play.google.com/store/apps/details?id=org.mcmlv1.voicetotext)** (on-device Whisper): **3.27K device acquisitions, 936 active installs** in 6 months. **[QR Code Generator Offline](https://play.google.com/store/apps/details?id=org.mcmlv1.qrcodegenerator)**: **1.28K acquisitions, 381 active**.
+- **MerlinChat**, the live sales and support chatbot on [mcmlv1.com](https://mcmlv1.com) — try it: **HAProxy load-balances concurrent users across multiple GPU workstations** running local LLMs — no third-party inference API; also in my Android apps.
+
+### Independent Software Engineer — self-directed R&D · 2021 – 2025
+
+- Built the Rust, CUDA, Android, and ML foundations; held all releases until forming the LLC, for liability protection.
 
 ## Rust systems
 
@@ -48,20 +60,11 @@ Clone it and run it — I'm glad to walk through any design decision in it.
 
 ## Production AI & GPU systems
 
-### MerlinChat — live customer-service and sales chatbot on [mcmlv1.com](https://mcmlv1.com)
-
-- Self-hosted serving stack: **HAProxy load-balances concurrent users across multiple GPU workstations** running local LLM backends — no third-party inference API. Also live in apps on Google Play and Samsung Galaxy Store.
-
 ### Local inference & GPU engineering
 
 - **Bosun:** model routing across 8B–120B tiers via llama-swap; on-device Android LLMs (LiteRT-LM) at sub-2s response.
 - **Hardware-aware deployment:** INT8/Q4 quantization; diagnosed and fixed FP16/BF16 training instability on Pascal GPUs.
 - **Orion (C++/CUDA):** GPU data cleaning and dedup at **~901K rows/sec** (1.15M rows in 1.276s), CPU/GPU cross-validated.
-
-## Shipped products
-
-- **Android: [15 apps live on Google Play](https://play.google.com/store/apps/developer?id=MCMLV1+LLC)**, plus 4 on Amazon Appstore and 2 on Samsung Galaxy Store — offline-first, native C#/.NET with SQLite/WAL, on-device Whisper speech-to-text and ML Kit vision. No ads, accounts, or tracking.
-- **QR Code Link Me** — Rust core: live on the Microsoft Store; Swift macOS version submitted to the Mac App Store.
 
 ## Technologies
 
@@ -73,8 +76,6 @@ Clone it and run it — I'm glad to walk through any design decision in it.
 
 **Infrastructure:** HAProxy · WireGuard · Cloudflare (Pages / Tunnel / R2) · Linux / systemd · Docker · SQLite (WAL / FTS5) · Stripe · Git
 
-## Background & approach
+## Approach
 
-Self-directed engineering since 2021 — I learned by shipping real software: from native Android to cross-platform Rust cores, multi-GPU serving, CUDA, and training LLMs from scratch. Founded MCMLV1 LLC in January 2026.
-
-Give me a hard objective and its constraints; I design, build, measure, and iterate until it works, engineering out risks and dependencies rather than managing them. Best with end-to-end ownership in remote, async, output-measured roles.
+Give me a hard objective and constraints; I design, build, measure, and iterate until it works. Best with end-to-end ownership in remote, async, output-measured roles.
