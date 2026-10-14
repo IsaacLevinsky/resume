@@ -2,87 +2,124 @@
 
 **Software Engineer | Rust, AI Systems, GPU Performance & Cloud Infrastructure**
 
-ilevinsky36@gmail.com | 386-576-6616 | [github.com/IsaacLevinsky](https://github.com/IsaacLevinsky) | [mcmlv1.com](https://mcmlv1.com)
+I build AI systems, shared Rust engines, GPU inference software, cloud services, developer tools, and commercial mobile and desktop products. I own architecture, implementation, testing, deployment, and production operation, choosing local, cloud, or hybrid systems to fit the problem.
+
+## Hiring
+
+**[Download my current two-page resume (PDF)](Isaac_Levinsky_Software_Engineer_Rust_AI_GPU_Resume.pdf)**
 
 Greater Tampa Bay Area, FL | Remote US | Full-time W-2 or contract
 
-**[Download the two-page resume (PDF)](Isaac_Levinsky_Software_Engineer_Rust_AI_GPU_Resume.pdf)**
+[ilevinsky36@gmail.com](mailto:ilevinsky36@gmail.com) | 386-576-6616 | [github.com/IsaacLevinsky](https://github.com/IsaacLevinsky) | [mcmlv1.com](https://mcmlv1.com)
 
-## Summary
+## GPU inference engineering
 
-Software engineer building AI systems, shared Rust engines, GPU inference software, cloud services, developer tools, and commercial mobile and desktop products. Owns architecture, implementation, testing, deployment, and production operation. Experience spans model training and evaluation, AI agents, GPU performance engineering, and shipped production software, with measured inference improvements and FP64 numerical validation.
+Develop proprietary GPU inference software focused on improving model-serving speed and efficiency. Experience includes **CUDA and GPU kernel work**, hardware-aware optimization, benchmarking, and numerical validation across NVIDIA GPUs, with ongoing work on Apple Silicon.
 
-## Technical skills
+Evaluate performance through controlled comparisons and CPU/GPU validation, then connect inference work to production software and deployment.
+
+**MerlinChat**, the sales and support chatbot on [mcmlv1.com](https://mcmlv1.com), demonstrates production AI infrastructure using self-hosted models and HAProxy routing across GPU workstations.
+
+Implementation details and detailed research material remain private. Selected technical details can be discussed under NDA.
+
+## Rust systems
+
+### Shared engines across native platforms
+
+Build product logic once in Rust and embed it through FFI bindings in native Kotlin/C# Android shells, Swift macOS interfaces, and Windows/Linux desktop applications. One shared core owns product behavior, so fixes can be carried across platforms.
+
+**QR Code Link Me** uses a shared Rust core behind Windows and macOS interfaces. **DocEngine** powers MCMLV1 Viewer. Platform work includes Rust FFI/UniFFI, native Android, .NET, Swift, and Tauri.
+
+### CodeLoop — autonomous AI engineering system
+
+Active development: shared Rust core with a Swift macOS interface and a Tauri frontend for Windows and Linux.
+
+- Generates, builds, and analyzes software programs, with built-in data-science analysis and visualization.
+- Runs local inference through MLX on Apple Silicon, including self-quantized models, and llama.cpp on Windows/Linux.
+- Can route larger-model work to LAN-hosted GPU workstation endpoints; supports offline and air-gapped operation.
+
+### LookingGlass — zero-dependency workspace engine
+
+Compiled Rust workspace analysis in a single binary: project classification, language detection, dependency/reference graphing, and automated audit reports.
+
+- Processed **3,441 files in approximately 47 ms** in a measured local run.
+- Powers RustMind's corpus export, with **zero false positives in the evaluated corpus-export checks across 30+ repositories**.
+
+### Orion — GPU data processing
+
+Built C++/CUDA software for data cleaning and deduplication, with CPU/GPU cross-validation. A measured workload processed **1.15M rows in 1.276 seconds**, approximately **901,000 rows/sec**.
+
+## AI / ML
+
+### RustMind — training systems in Rust and Burn
+
+Designed the model architecture, byte-level BPE tokenizer, corpus-processing pipeline, train/validation design, and GPU training path in Rust using Burn.
+
+- Explored a **21M→125M parameter ladder**, including generative training at 125M and a 72M encoder-decoder; trained a 21M encoder and integrated it into shipped software.
+- Investigated generation collapse alongside validation-split and templated-data problems, then redesigned corpus processing around document-aware chunks and explicit train/validation separation.
+- Used **Rust generics over CUDA and CPU backends**, carrying a shared codebase from GPU training to CPU inference.
+- Investigated FP16/BF16 instability on Pascal GPUs and established hardware-aware training and CPU/GPU validation practices.
+
+The Rust/Burn training stack is separate from the public Python/PyTorch pipeline below.
+
+### RustMind Mini Embed Base — public ML pipeline
+
+**[Source and proof reports](https://github.com/IsaacLevinsky/rustmind-mini-embed-base)** — MIT
+
+Built and trained an approximately 21M-parameter encoder using Python, PyTorch, and Hugging Face. The published pipeline covers tokenizer training, masked-language-model pretraining, direct ONNX export, INT8 quantization, and local embedding/search demonstrations.
+
+Published runnable source, a reproducible CPU-only proof run, and a base checkpoint. Built a filtered corpus pipeline and separated corpus and training requirements to simplify installation and packaging.
+
+### Private inference assistant — Rust gateway and Android client
+
+Built a private LLM chat system with a Rust gateway on a GPU workstation and a Kotlin/Jetpack Compose Android client over a Rust core handling streaming and on-device history.
+
+- **WireGuard-only transport**, with no public endpoint and inference bound to localhost.
+- Retrieval over a **SQLite FTS5/BM25 knowledge cache**.
+- Prompts ordered for **llama.cpp prefix-cache reuse** during long conversations.
+
+### Bosun and model evaluation
+
+Built model routing across **8B–120B tiers using llama-swap**. Ran and evaluated **100+ open-source LLMs** across local and self-hosted environments. Earlier on-device Android LLM work used LiteRT-LM and measured sub-two-second responses in the tested setup.
+
+### Production on-device AI
+
+Shipped **LiteRT inference using Moonshine in Private Dictation**, alongside Whisper-based dictation, multilingual translation, and ML Kit OCR/text-recognition workflows running on user devices. The Moonshine dictation deployment is distinct from the earlier Android LLM response measurement.
+
+## Shipped products
+
+Founded **MCMLV1 LLC — Professional Software Solutions** in January 2026. Own architecture, implementation, testing, release, and production operation across native applications, shared software engines, web services, and AI infrastructure.
+
+- **[15 Android apps on Google Play](https://play.google.com/store/apps/developer?id=MCMLV1+LLC)** and **[4 on Amazon Appstore](https://www.amazon.com/s?i=mobile-apps&rh=p_4%3AMCMLV1%2BLLC&search-type=ss)**.
+- **[Talk Together: In-Person Offline AI Translation](https://galaxystore.samsung.com/detail/org.mcmlv1.talktogether.samsung)** on Samsung Galaxy Store.
+- **[QR Code Link Me](https://apps.microsoft.com/detail/9ngvp6bj0dvl?hl=en-US&gl=US)** on Microsoft Store, plus macOS software.
+- **[Private Dictation: Offline AI](https://play.google.com/store/apps/details?id=org.mcmlv1.voicetotext)** recorded **3.27K device acquisitions and 936 active installs in six months**.
+- **[QR Code Generator Offline](https://play.google.com/store/apps/details?id=org.mcmlv1.qrcodegenerator)** recorded **1.28K acquisitions and 381 active installs**.
+
+Adoption figures are the recorded snapshots carried in the current resume, rather than live store statistics.
+
+Built estimating and invoicing applications with signatures, photo capture, templates, SQLite/WAL storage, and ZIP backup/restore, plus document/PDF-processing and audit-journaling utilities. Offline-first product work emphasizes on-device processing and no ads, accounts, or tracking.
+
+## Cloud / infrastructure
+
+Deployed web tools, chatbot demonstrations, and Stripe-enabled product infrastructure on **Cloudflare Pages, Tunnel, and R2**, owning integration, deployment, and maintenance. Operated Linux services and HAProxy routing for self-hosted inference.
 
 **Languages:** Rust, Python, C++/CUDA, TypeScript/JavaScript, C#, Kotlin, Swift, SQL, Bash, Go
 
-**Cloud & infrastructure:** Docker, Linux, HAProxy, Cloudflare Pages/Tunnel/R2, Google Cloud Storage, Firebase, AWS, Stripe
+**Infrastructure and services:** Docker, Linux/systemd, HAProxy, Cloudflare Pages/Tunnel/R2, Google Cloud Storage, Firebase, AWS, WireGuard, Stripe, SQLite/WAL, FTS5/BM25, Git
 
-**AI & data:** PyTorch, Hugging Face, ONNX/ONNX Runtime, Burn, LiteRT, MLX, CUDA, llama.cpp, RAG, embeddings, MCP/tool calling, LangChain/LangGraph, SQLite/WAL, FTS5/BM25
+**AI and data tooling:** PyTorch, Hugging Face, ONNX/ONNX Runtime, Burn, LiteRT/LiteRT-LM, MLX, CUDA, llama.cpp/llama-swap, RAG, embeddings, MCP/tool calling, LangChain/LangGraph, ML Kit, Whisper, Moonshine
 
-**Applications:** Native Android, .NET, Swift, Tauri, React; cross-platform release and deployment
+## About / availability
 
-## Experience
+Independent software engineering and R&D from January 2021 through December 2025 established the Rust, CUDA, Android, and ML foundations later commercialized through MCMLV1 LLC.
 
-### Founder & Software Engineer
+**Education:** University of Delaware | Bachelor of Arts
 
-**MCMLV1 LLC — Professional Software Solutions**
+**Languages:** English — native | French — professional working proficiency.
 
-Jan 2026–Present | Greater Tampa Bay Area | Remote
+**Availability:** Remote US | Full-time W-2 or contract | Async-preferred
 
-Own architecture, implementation, testing, release, and production operation across AI infrastructure, web services, native applications, and shared software engines.
+I work best with end-to-end ownership, clear objectives, and measurable outcomes: design, build, test, measure, and iterate.
 
-#### Production systems, cloud services & commercial software
-
-- **Production AI infrastructure:** Built and operated MerlinChat, a sales/support chatbot using HAProxy to route concurrent users across multiple GPU workstations running local LLMs.
-- **Model evaluation:** Ran and evaluated 100+ open-source LLMs across local and self-hosted inference environments, spanning model tiers from 8B through 120B-class systems.
-- **Cloud services & payments:** Deployed web tools, AI chatbot demonstrations, and Stripe-enabled product infrastructure on Cloudflare Pages, Tunnel, and R2; owned integration, deployment, and maintenance.
-- **Commercial releases:** Shipped [15 Android apps on Google Play](https://play.google.com/store/apps/developer?id=MCMLV1+LLC) and [4 on Amazon Appstore](https://www.amazon.com/s?i=mobile-apps&rh=p_4%3AMCMLV1%2BLLC&search-type=ss), [Talk Together on Samsung Galaxy Store](https://galaxystore.samsung.com/detail/org.mcmlv1.talktogether.samsung), [QR Code Link Me on Microsoft Store](https://apps.microsoft.com/detail/9ngvp6bj0dvl?hl=en-US&gl=US), and macOS software.
-- **Product adoption:** [Private Dictation: Offline AI](https://play.google.com/store/apps/details?id=org.mcmlv1.voicetotext) recorded 3.27K device acquisitions and 936 active installs in six months; [QR Code Generator Offline](https://play.google.com/store/apps/details?id=org.mcmlv1.qrcodegenerator) recorded 1.28K acquisitions and 381 active installs.
-- **Cross-platform engineering:** Built shared Rust engines embedded in native Kotlin/C# Android shells and Swift macOS interfaces; developed Windows and Linux desktop applications on the same shared-core architecture.
-
-#### GPU inference performance & numerical validation
-
-- **Measured inference gains:** Built a custom gpt-oss-20b inference engine on RTX 3060 12 GB; achieved 127.3 vs 92.8 tokens/sec (+37.2%) at ~1k context against GPU-optimized llama.cpp b11609, and 2,898 vs 2,442 tokens/sec (+18.7%) for prompt processing.
-- **Controlled evaluation:** Used the same GPU, model weights, and token inputs; generation measured 64 teacher-forced decisions, with medians of five rounds after warm-up. Matched-document evaluation also covered ~4k and ~8k contexts.
-- **Numerical fidelity:** In a separate 32-prompt CPU FP64 reference suite, achieved 2,046/2,048 top-1 matches and 57.6× lower mean KL divergence than a pinned llama.cpp baseline.
-- **Hardware breadth:** Developed custom inference software for Pascal GP100 and Ampere RTX 3060 GPUs; current work includes custom inference on a MacBook Pro M5 with 32 GB memory.
-
-### Independent Software Engineer
-
-**Self-Directed Engineering Projects | Self-employed**
-
-Jan 2021–Dec 2025 | Tampa, FL | Remote
-
-Engineering and R&D in systems software, machine learning, GPU computing, and Android development; established foundations later commercialized through MCMLV1 LLC.
-
-- **Model training systems:** Designed and implemented RustMind using Rust and Burn, covering model architecture, byte-level BPE tokenization, corpus processing, train/validation design, and GPU training.
-- **ML debugging:** Investigated model capacity across a parameter ladder; diagnosed generation collapse associated with validation and data-pipeline problems, then redesigned corpus processing around document-aware chunks and explicit data splits.
-- **Developer tooling:** Built LookingGlass, a zero-dependency Rust workspace-analysis engine for project classification, language detection, dependency/reference graphing, and automated audits; processed 3,441 files in ~47 ms in a measured local run.
-- **GPU data processing:** Built Orion (C++/CUDA) for data cleaning and deduplication at ~901,000 rows/sec on a measured workload, with CPU/GPU cross-validation.
-- **Numerical reliability:** Investigated precision-related instability on Pascal GPUs and developed hardware-aware training and inference workflows; established CPU/GPU validation practices for subsequent products.
-
-## Selected projects
-
-### CodeLoop — Autonomous AI Engineering System
-
-Active development | Rust, Swift, Tauri, MLX, llama.cpp
-
-- **Agentic software generation:** Built an autonomous coding system that generates, builds, and analyzes complete software programs, with built-in data-science analysis and visualization; shared Rust core with a Swift macOS interface and a Tauri frontend for Windows and Linux.
-- **Model serving:** Runs local inference through MLX on Apple Silicon, including self-quantized models, and llama.cpp on Windows/Linux; can route larger-model work to LAN-hosted GPU workstation endpoints.
-
-### RustMind Mini Embed Base — Public ML Pipeline
-
-[github.com/IsaacLevinsky/rustmind-mini-embed-base](https://github.com/IsaacLevinsky/rustmind-mini-embed-base)
-
-- **Training & deployment:** Built and trained a ~21M-parameter encoder with Python, PyTorch, and Hugging Face; implemented tokenizer training, masked-language-model pretraining, ONNX export, INT8 quantization, and local embedding/search demonstrations.
-- **Reproducibility:** Published runnable source and proof reports; built a filtered corpus pipeline and separated corpus/training requirements, using direct ONNX export to simplify installation and packaging.
-
-### Native Applications & Offline Product Engineering
-
-- **On-device AI:** Shipped production LiteRT inference in Private Dictation using Moonshine, alongside Whisper-based dictation, multilingual translation, and ML Kit OCR/text-recognition workflows running entirely on user devices.
-- **Business software:** Built estimating and invoicing applications with signatures, photo capture, templates, SQLite/WAL storage, and ZIP backup/restore; shipped document, PDF-processing, and audit-journaling utilities.
-
-## Education
-
-University of Delaware | Bachelor of Arts
+**Company verification:** [MCMLV1 LLC — Florida Division of Corporations (Sunbiz)](https://search.sunbiz.org/Inquiry/CorporationSearch/SearchResultDetail?inquirytype=EntityName&directionType=Initial&searchNameOrder=MCMLV1%20L260000333020&aggregateId=flal-l26000033302-8d84d1c8-c45b-4a36-a250-98ad0f189713&searchTerm=mcmlv1&listNameOrder=MCMLV1%20L260000333020)
