@@ -12,7 +12,7 @@ Public reports: [mcmlv1.com/inference-120b](https://mcmlv1.com/inference-120b) |
 
 ## Profile
 
-Built a GPT-OSS-120B runtime for a workstation with 24 GB of combined GPU memory, then measured the same model on an H100 across vLLM, SGLang and TensorRT-LLM. Trace latency, cost and output differences from the serving layer to the kernel.
+Build AI systems end to end, from first design to production, often solo: a GPT-OSS-120B runtime for a two-GPU workstation with 24 GB of GPU memory, then the same model on an H100 across vLLM, SGLang and TensorRT-LLM.
 
 ## Experience
 
