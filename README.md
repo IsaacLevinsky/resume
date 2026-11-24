@@ -1,125 +1,49 @@
 # Isaac Levinsky
 
-**Software Engineer | Rust, AI Systems, GPU Performance & Cloud Infrastructure**
+**AI Inference Engineer** | GPU performance, model serving and numerical validation
 
-I build AI systems, shared Rust engines, GPU inference software, cloud services, developer tools, and commercial mobile and desktop products. I own architecture, implementation, testing, deployment, and production operation, choosing local, cloud, or hybrid systems to fit the problem.
+Tampa Bay, FL | Remote (US) | Available now, full-time or contract W-2 | No client commitments
 
-## Hiring
+[admin@mcmlv1.com](mailto:admin@mcmlv1.com) | [linkedin.com/in/isaaclevinsky](https://www.linkedin.com/in/isaaclevinsky/) | [github.com/IsaacLevinsky](https://github.com/IsaacLevinsky)
 
-**[Download my current two-page resume (PDF)](Isaac_Levinsky_Software_Engineer_Rust_AI_GPU_Resume.pdf)**
+Public reports: [mcmlv1.com/inference-120b](https://mcmlv1.com/inference-120b) | [mcmlv1.com/h100-serving-engines](https://mcmlv1.com/h100-serving-engines)
 
-Greater Tampa Bay Area, FL | Remote US | Full-time W-2 or contract
+**Resume (PDF): [Isaac_Levinsky_Resume.pdf](Isaac_Levinsky_Resume.pdf)**
 
-[ilevinsky36@gmail.com](mailto:ilevinsky36@gmail.com) | 386-576-6616 | [github.com/IsaacLevinsky](https://github.com/IsaacLevinsky) | [mcmlv1.com](https://mcmlv1.com)
+## Profile
 
-## GPU inference engineering
+Built a GPT-OSS-120B runtime for a workstation with 24 GB of combined GPU memory, then measured the same model on an H100 across vLLM, SGLang and TensorRT-LLM. Trace latency, cost and output differences from the serving layer to the kernel.
 
-Develop proprietary GPU inference software focused on improving model-serving speed and efficiency. Experience includes **CUDA and GPU kernel work**, hardware-aware optimization, benchmarking, and numerical validation across NVIDIA GPUs, with ongoing work on Apple Silicon.
+## Experience
 
-Evaluate performance through controlled comparisons and CPU/GPU validation, then connect inference work to production software and deployment.
+### AI Inference Engineer (Independent)
+MCMLV1 LLC | January 2026 – Present | Remote
 
-**MerlinChat**, the sales and support chatbot on [mcmlv1.com](https://mcmlv1.com), demonstrates production AI infrastructure using self-hosted models and HAProxy routing across GPU workstations.
+- **Workstation runtime.** Built a GPT-OSS-120B runtime (65 GB mixture-of-experts) across a 16 GB GP100, an 8 GB RTX 4000, CPU and system RAM. Against tuned llama.cpp and ik_llama.cpp on the same workstation, it won all 18 speed comparisons at six prompt lengths (336–65,280 tokens): prompt reading up to 32% faster, answer generation 15–25% faster and complete answers 6–18% sooner than the best rival.
+- **Numerical validation.** Matched all 2,113 held-out reference next-token choices from the original weights in FP32/FP64; ik_llama.cpp missed 47 and llama.cpp 53. Built per-phase profilers and GPU bandwidth microbenchmarks to separate speed gains from output changes.
+- **Custom GPU kernels.** Built GPT-OSS-20B runtimes with their own GPU kernels. RTX 3060: decode 23–27% faster than a matched llama.cpp CUDA build through 8K context, about 58x lower mean KL from an FP64 reference; previously deployed behind MerlinChat. GP100: 200.6 vs 74.7 tokens/s single-conversation generation; it serves MerlinChat today.
+- **Cloud serving cost.** Built a Rust benchmark harness and budget-capped runner to compare vLLM, SGLang and TensorRT-LLM serving GPT-OSS-120B on one H100. FP8 KV cache cut cost per output token 37% for vLLM ($0.72 to $0.45 per million) and 35% for SGLang, with no detectable change in MLPerf v6.0 accuracy.
+- **Repeatability.** Under changing load, 1,000 identical temperature-0 requests produced 82 distinct vLLM completions at defaults, 110 in batch-invariant mode, and 3 from SGLang. One-change runs traced the batch-invariant failure to the FlashAttention 3 path; with Triton attention, all 200 test completions matched the solo run.
+- **Upstream contribution.** Traced a calibration gap (SGLang 12 of 18 vs 17 of 18 for TensorRT-LLM) to answers cut off near 5,000 tokens by SGLang’s 5,209-token KV pool, and submitted SGLang PR #52026 (open; addresses issue #50443), which warns when the KV pool lowers an explicit output limit: [github.com/sgl-project/sglang/pull/52026](https://github.com/sgl-project/sglang/pull/52026)
+- **GPU profiling.** In Nsight Systems, a warmed-up vLLM server at 16 users had eight idle gaps totaling 5.95 seconds in a 12-second capture, each ending in a GPU module load: consistent with just-in-time kernel compilation at batch sizes not seen in warm-up.
+- **Quantization.** Quantized Google’s BF16 Gemma 4 26B-A4B into a 15.4 GB 4-bit file for the GP100: mean KL divergence 0.025 vs 0.156 for Google’s QAT Q4_0 release on llama.cpp, at 117 vs 58 tokens/s in single-chat generation.
+- **Apple Silicon.** Built a Rust/Metal runtime and a 13.1 GB mixed-precision Gemma 4 26B-A4B model on an Apple M5. Prompt processing was 20–35% faster than mlx_lm across tested lengths from 1K to 64K.
+- **Mobile inference.** Wrote a dependency-free Rust runtime with ARM64 SDOT assembly for 8-bit Qwen3-0.6B. On a midrange Android phone, reduced time to first text on a 359-token prompt from 21.7 to 2.15 seconds while keeping optimizations bit-identical to a frozen reference.
+- **Serving and distribution.** Ran a systemd-managed GPT-OSS-120B streaming API with rollback and build-and-test checks for CodeLoop and a job-matching tool in November 2026. Shipped 15 Android apps on Google Play and software through the Amazon Appstore, Microsoft Store and Mac App Store.
 
-Implementation details and detailed research material remain private. Selected technical details can be discussed under NDA.
+### Independent Software Engineer
+Self-directed systems and ML projects | 2021 – 2025 | Remote
 
-## Rust systems
+- **GPU data processing.** Built a C++/CUDA engine for data cleaning and deduplication. It processed about 901,000 rows per second on a measured workload, with GPU results checked against a CPU implementation.
 
-### Shared engines across native platforms
+## Technical skills
 
-Build product logic once in Rust and embed it through FFI bindings in native Kotlin/C# Android shells, Swift macOS interfaces, and Windows/Linux desktop applications. One shared core owns product behavior, so fixes can be carried across platforms.
+- **Languages and hardware.** Rust, C/C++, Python, CUDA, Metal, ARM64 NEON/SDOT
+- **Inference and measurement.** vLLM, SGLang, TensorRT-LLM, Nsight Systems, MLPerf Inference v6.0 accuracy method, KV caching, prefill/decode profiling, FP64 references, quantization
+- **Deployment.** Linux, Docker, Kubernetes, Helm, systemd, HAProxy, Prometheus, Grafana, DCGM
 
-**QR Code Link Me** uses a shared Rust core behind Windows and macOS interfaces. **DocEngine** powers MCMLV1 Viewer. Platform work includes Rust FFI/UniFFI, native Android, .NET, Swift, and Tauri.
+## Education
 
-### CodeLoop — autonomous AI engineering system
-
-Active development: shared Rust core with a Swift macOS interface and a Tauri frontend for Windows and Linux.
-
-- Generates, builds, and analyzes software programs, with built-in data-science analysis and visualization.
-- Runs local inference through MLX on Apple Silicon, including self-quantized models, and llama.cpp on Windows/Linux.
-- Can route larger-model work to LAN-hosted GPU workstation endpoints; supports offline and air-gapped operation.
-
-### LookingGlass — zero-dependency workspace engine
-
-Compiled Rust workspace analysis in a single binary: project classification, language detection, dependency/reference graphing, and automated audit reports.
-
-- Processed **3,441 files in approximately 47 ms** in a measured local run.
-- Powers RustMind's corpus export, with **zero false positives in the evaluated corpus-export checks across 30+ repositories**.
-
-### Orion — GPU data processing
-
-Built C++/CUDA software for data cleaning and deduplication, with CPU/GPU cross-validation. A measured workload processed **1.15M rows in 1.276 seconds**, approximately **901,000 rows/sec**.
-
-## AI / ML
-
-### RustMind — training systems in Rust and Burn
-
-Designed the model architecture, byte-level BPE tokenizer, corpus-processing pipeline, train/validation design, and GPU training path in Rust using Burn.
-
-- Explored a **21M→125M parameter ladder**, including generative training at 125M and a 72M encoder-decoder; trained a 21M encoder and integrated it into shipped software.
-- Investigated generation collapse alongside validation-split and templated-data problems, then redesigned corpus processing around document-aware chunks and explicit train/validation separation.
-- Used **Rust generics over CUDA and CPU backends**, carrying a shared codebase from GPU training to CPU inference.
-- Investigated FP16/BF16 instability on Pascal GPUs and established hardware-aware training and CPU/GPU validation practices.
-
-The Rust/Burn training stack is separate from the public Python/PyTorch pipeline below.
-
-### RustMind Mini Embed Base — public ML pipeline
-
-**[Source and proof reports](https://github.com/IsaacLevinsky/rustmind-mini-embed-base)** — MIT
-
-Built and trained an approximately 21M-parameter encoder using Python, PyTorch, and Hugging Face. The published pipeline covers tokenizer training, masked-language-model pretraining, direct ONNX export, INT8 quantization, and local embedding/search demonstrations.
-
-Published runnable source, a reproducible CPU-only proof run, and a base checkpoint. Built a filtered corpus pipeline and separated corpus and training requirements to simplify installation and packaging.
-
-### Private inference assistant — Rust gateway and Android client
-
-Built a private LLM chat system with a Rust gateway on a GPU workstation and a Kotlin/Jetpack Compose Android client over a Rust core handling streaming and on-device history.
-
-- **WireGuard-only transport**, with no public endpoint and inference bound to localhost.
-- Retrieval over a **SQLite FTS5/BM25 knowledge cache**.
-- Prompts ordered for **llama.cpp prefix-cache reuse** during long conversations.
-
-### Bosun and model evaluation
-
-Built model routing across **8B–120B tiers using llama-swap**. Ran and evaluated **100+ open-source LLMs** across local and self-hosted environments. Earlier on-device Android LLM work used LiteRT-LM and measured sub-two-second responses in the tested setup.
-
-### Production on-device AI
-
-Shipped **LiteRT inference using Moonshine in Private Dictation**, alongside Whisper-based dictation, multilingual translation, and ML Kit OCR/text-recognition workflows running on user devices. The Moonshine dictation deployment is distinct from the earlier Android LLM response measurement.
-
-## Shipped products
-
-Founded **MCMLV1 LLC — Professional Software Solutions** in January 2026. Own architecture, implementation, testing, release, and production operation across native applications, shared software engines, web services, and AI infrastructure.
-
-- **[15 Android apps on Google Play](https://play.google.com/store/apps/developer?id=MCMLV1+LLC)** and **[4 on Amazon Appstore](https://www.amazon.com/s?i=mobile-apps&rh=p_4%3AMCMLV1%2BLLC&search-type=ss)**.
-- **[Talk Together: In-Person Offline AI Translation](https://galaxystore.samsung.com/detail/org.mcmlv1.talktogether.samsung)** on Samsung Galaxy Store.
-- **[QR Code Link Me](https://apps.microsoft.com/detail/9ngvp6bj0dvl?hl=en-US&gl=US)** on Microsoft Store, plus macOS software.
-- **[Private Dictation: Offline AI](https://play.google.com/store/apps/details?id=org.mcmlv1.voicetotext)** recorded **3.27K device acquisitions and 936 active installs in six months**.
-- **[QR Code Generator Offline](https://play.google.com/store/apps/details?id=org.mcmlv1.qrcodegenerator)** recorded **1.28K acquisitions and 381 active installs**.
-
-Adoption figures are the recorded snapshots carried in the current resume, rather than live store statistics.
-
-Built estimating and invoicing applications with signatures, photo capture, templates, SQLite/WAL storage, and ZIP backup/restore, plus document/PDF-processing and audit-journaling utilities. Offline-first product work emphasizes on-device processing and no ads, accounts, or tracking.
-
-## Cloud / infrastructure
-
-Deployed web tools, chatbot demonstrations, and Stripe-enabled product infrastructure on **Cloudflare Pages, Tunnel, and R2**, owning integration, deployment, and maintenance. Operated Linux services and HAProxy routing for self-hosted inference.
-
-**Languages:** Rust, Python, C++/CUDA, TypeScript/JavaScript, C#, Kotlin, Swift, SQL, Bash, Go
-
-**Infrastructure and services:** Docker, Linux/systemd, HAProxy, Cloudflare Pages/Tunnel/R2, Google Cloud Storage, Firebase, AWS, WireGuard, Stripe, SQLite/WAL, FTS5/BM25, Git
-
-**AI and data tooling:** PyTorch, Hugging Face, ONNX/ONNX Runtime, Burn, LiteRT/LiteRT-LM, MLX, CUDA, llama.cpp/llama-swap, RAG, embeddings, MCP/tool calling, LangChain/LangGraph, ML Kit, Whisper, Moonshine
-
-## About / availability
-
-Independent software engineering and R&D from January 2021 through December 2025 established the Rust, CUDA, Android, and ML foundations later commercialized through MCMLV1 LLC.
-
-**Education:** University of Delaware | Bachelor of Arts
-
-**Languages:** English — native | French — professional working proficiency.
-
-**Availability:** Remote US | Full-time W-2 or contract | Async-preferred
-
-I work best with end-to-end ownership, clear objectives, and measurable outcomes: design, build, test, measure, and iterate.
-
-**Company verification:** [MCMLV1 LLC — Florida Division of Corporations (Sunbiz)](https://search.sunbiz.org/Inquiry/CorporationSearch/SearchResultDetail?inquirytype=EntityName&directionType=Initial&searchNameOrder=MCMLV1%20L260000333020&aggregateId=flal-l26000033302-8d84d1c8-c45b-4a36-a250-98ad0f189713&searchTerm=mcmlv1&listNameOrder=MCMLV1%20L260000333020)
+- Doctorate, Clinical Psychology, Florida Institute of Technology
+- Master of Science, Psychology, Florida Institute of Technology
+- Bachelor of Arts, Psychology, University of Delaware
